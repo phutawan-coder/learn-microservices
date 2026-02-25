@@ -14,16 +14,19 @@ pipeline {
       }
     }
 
-    stage('Test') {
-      steps {
-        sh 'python /services/order-service/test/test.py'
-      }
-    }
-
     stage('Build Docker Image') {
       steps {
         sh 'docker build -t order-service:${ORDER_SERVICE_TAG} ./services/order-service/'
         sh 'docker build -t user-service:${USER_SERVICE_TAG} ./services/user-service/'
+      }
+    }
+
+    stage('Run Tests') {
+      steps {
+        sh """
+        docker run --rm order-service:${ORDER_SERVICE_TAG} \
+        python test/test.py
+        """
       }
     }
 
