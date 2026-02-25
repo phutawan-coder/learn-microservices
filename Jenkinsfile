@@ -38,16 +38,6 @@ pipeline {
       }
     }
 
-    post {
-      success {
-        echo "CI success"
-      }
-      failure {
-        echo "CI failed"
-      }
-      always {
-        echo "Pipeline finished"
-      }
     }
 
   }
