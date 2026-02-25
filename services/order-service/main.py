@@ -9,8 +9,9 @@ MAX_RETRY = 3
 
 @app.post('/orders/{user_id}')
 def create_order(user_id: int):
-    for i in range(20_000_000):
-        pass
+    total = 0
+    for i in range(50_000_000):
+        total += i * i
     for a in range(MAX_RETRY):
         try:
             res = requests.get(f"{USER_SERVICE}/users/{user_id}", timeout=3) 
