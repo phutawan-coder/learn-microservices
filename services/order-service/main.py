@@ -9,9 +9,6 @@ MAX_RETRY = 3
 
 @app.post('/orders/{user_id}')
 def create_order(user_id: int):
-    total = 0
-    for i in range(50_000_000):
-        total += i * i
     for a in range(MAX_RETRY):
         try:
             res = requests.get(f"{USER_SERVICE}/users/{user_id}", timeout=3) 
@@ -29,4 +26,11 @@ def create_order(user_id: int):
 
 @app.get('/health')
 def health_check():
+    return {"status": "ok"}
+
+@app.get('/heavy')
+def heavy():
+    total = 0
+    for i in range(50_000_000):
+        total += i * i
     return {"status": "ok"}
